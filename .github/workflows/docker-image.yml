@@ -1,4 +1,4 @@
-name: Docker Build and Publish
+name: Docker Build, Publish and Static Analysis
 
 on:
   push:
@@ -40,7 +40,7 @@ jobs:
           python-version: 3.x
 
       - name: Install dependencies
-        run: pip install -r /usr/src/app/requirements.txt
+        run: pip install -r /src/requirements.txt
         
       - name: Snyk Code Analysis
         run: |
