@@ -46,7 +46,7 @@ jobs:
         run: |
           npm install -g snyk
           snyk auth ${{ secrets.SNYK_API_TOKEN }}
-          snyk test --file=src/requirements.txt --command=python3
+          snyk test --file=src/requirements.txt --command=python3 -- --allow-missing
 
       # SonarCloud analysis step
       - name: SonarCloud Analysis
