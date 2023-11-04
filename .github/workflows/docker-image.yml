@@ -40,7 +40,9 @@ jobs:
           python-version: 3.x
 
       - name: Install dependencies
-        run: pip3 install -r src/requirements.txt setuptools@66.1.1
+        run: |
+          pip3 install -r src/requirements.txt 
+          pip3 install setuptools@66.1.1
         
       - name: Snyk Code Analysis
         run: |
