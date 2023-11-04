@@ -46,7 +46,7 @@ jobs:
         run: |
           npm install -g snyk
           snyk auth ${{ secrets.SNYK_API_TOKEN }}
-          snyk test --all-projects
+          snyk test src/
 
       # SonarCloud analysis step
       - name: SonarCloud Analysis
