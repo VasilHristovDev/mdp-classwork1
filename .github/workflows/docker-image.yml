@@ -46,7 +46,7 @@ jobs:
         run: |
           npm install -g snyk
           snyk auth ${{ secrets.SNYK_API_TOKEN }}
-          snyk test --debug --file=src/requirements.txt --command=pip3
+          snyk test --debug --file=src/requirements.txt --package-manager=pip
 
       # SonarCloud analysis step
       - name: SonarCloud Analysis
