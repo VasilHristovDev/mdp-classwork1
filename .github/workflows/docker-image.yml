@@ -23,7 +23,11 @@ jobs:
           DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build Docker image
-        run: docker build -t Vaskonti/mdp-c1:latest src
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/mdp-c1:latest src
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
 
       - name: Push Docker image to DockerHub
-        run: docker push Vaskonti/mdp-c1:latest
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/mdp-c1:latest
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
