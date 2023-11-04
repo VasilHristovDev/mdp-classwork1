@@ -13,26 +13,26 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Docker Build
-        uses: docker/setup-buildx-action@v1
+     # - name: Set up Docker Build
+     #   uses: docker/setup-buildx-action@v1
 
-      - name: Login to DockerHub
-        run: echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-        env:
-          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+     # - name: Login to DockerHub
+    #    run: echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+      #  env:
+     #     DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      #    DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build Docker image
-        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/mdp-c1:latest ./src
-        env:
-          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+    #  - name: Build Docker image
+     #   run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/mdp-c1:latest ./src
+    #    env:
+     #     DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
 
-      - name: Push Docker image to DockerHub
-        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/mdp-c1:latest
-        env:
-          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-      - name: Checkout code
-        uses: actions/checkout@v2
+   #   - name: Push Docker image to DockerHub
+     #   run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/mdp-c1:latest
+   #     env:
+    #      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+    #  - name: Checkout code
+     #   uses: actions/checkout@v2
 
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -46,7 +46,7 @@ jobs:
         run: |
           npm install -g snyk
           snyk auth ${{ secrets.SNYK_API_TOKEN }}
-          snyk test src/
+          snyk test --file=src/requirements.txt --command=python3
 
       # SonarCloud analysis step
       - name: SonarCloud Analysis
