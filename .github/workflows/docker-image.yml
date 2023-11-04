@@ -31,11 +31,6 @@ jobs:
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/mdp-c1:latest
         env:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-  
-  snyk:
-    runs-on: ubuntu-latest
-
-    steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
@@ -45,7 +40,24 @@ jobs:
           python-version: 3.x
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: pip install -r /usr/src/app/requirements.txt
+        
+      - name: Snyk Code Analysis
+        run: |
+          npm install -g snyk
+          snyk auth ${{ secrets.SNYK_API_TOKEN }}
+          snyk test --all-projects
 
-      - name: Snyk Scan
-        run: npx snyk test
+      # SonarCloud analysis step
+      - name: SonarCloud Analysis
+        run: |
+          ./gradlew sonarqube \
+            -Dsonar.projectKey=your_project_key \
+            -Dsonar.organization=your_organization_key \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.login=$SONARCLOUD_TOKEN
+        env:
+          SONARCLOUD_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
+
+      - name: Run your Python tests
+        run: python -m unittest discover -s tests
