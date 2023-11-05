@@ -39,16 +39,13 @@ jobs:
         with:
           python-version: 3.x
 
-      - name: Install dependencies
-        run: |
-          pip3 install -r src/requirements.txt 
-          pip3 install setuptools==66.1.1
-        
       - name: Snyk Code Analysis
+        working-directory: ${{github.workspace}}/src
         run: |
+          pip3 install -r requirements.txt
           npm install -g snyk
           snyk auth ${{ secrets.SNYK_API_TOKEN }}
-          snyk test --debug --file=src/requirements.txt --package-manager=pip
+          snyk test
 
       # SonarCloud analysis step
       - name: SonarCloud Analysis
