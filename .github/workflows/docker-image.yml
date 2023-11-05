@@ -52,6 +52,7 @@ jobs:
         uses: sonarsource/sonarcloud-github-action@master
         env:
           SONARCLOUD_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN }}
 
       - name: Run your Python tests
         run: python -m unittest discover -s tests
