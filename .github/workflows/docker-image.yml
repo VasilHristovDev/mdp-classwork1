@@ -51,7 +51,7 @@ jobs:
       - name: SonarCloud Analysis
         uses: sonarsource/sonarcloud-github-action@master
         env:
-          SONARCLOUD_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
+          SONARCLOUD_TOKEN: ${{ secrets.SONARCLUD_TOKEN }}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN }}
 
       - name: Run your Python tests
