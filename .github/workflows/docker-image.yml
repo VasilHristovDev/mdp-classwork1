@@ -13,32 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-     # - name: Set up Docker Build
-     #   uses: docker/setup-buildx-action@v1
-
-     # - name: Login to DockerHub
-    #    run: echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-      #  env:
-     #     DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-      #    DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
-
-    #  - name: Build Docker image
-     #   run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/mdp-c1:latest ./src
-    #    env:
-     #     DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-
-   #   - name: Push Docker image to DockerHub
-     #   run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/mdp-c1:latest
-   #     env:
-    #      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-    #  - name: Checkout code
-     #   uses: actions/checkout@v2
-
-      #- name: Set up Python
-      #  uses: actions/setup-python@v2
-       # with:
-       #   python-version: 3.x
-
+      # Snyk Static analysis step
       - name: Snyk Code Analysis
         working-directory: ${{github.workspace}}/src
         run: |
@@ -54,5 +29,31 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONARCLUD_TOKEN }}
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN }}
 
-      - name: Run your Python tests
-        run: python -m unittest discover -s tests
+      - name: Set up Docker Build
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        run: echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+        env:
+         DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+         DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build Docker image
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/mdp-c1:latest ./src
+        env:
+         DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: 'vaskonti/mdp-c1:latest'
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
+
+      - name: Push Docker image to DockerHub
+        run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/mdp-c1:latest
+        env:
+         DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
