@@ -1,10 +1,10 @@
-FROM ubuntu:latest
+FROM alpine:latest
 
 # Update the ubuntu image
-RUN apt-get update -y
+RUN apk update
 
 # Install the requirements
-RUN apt-get install -y python3 python3-pip python3-dev build-essential
+RUN apk add python3 py3-pip py3-dev build-base
 
 # Copy needed files in the container
 COPY ./requirements.txt /usr/src/app/
