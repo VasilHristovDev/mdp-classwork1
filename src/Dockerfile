@@ -4,7 +4,7 @@ FROM alpine:latest
 RUN apk update
 
 # Install the requirements
-RUN apk add python3 py3-pip py3-dev build-base
+RUN apk add python3 py3-pip python3-dev
 
 # Copy needed files in the container
 COPY ./requirements.txt /usr/src/app/
