@@ -20,7 +20,7 @@ jobs:
         pip install flake8
         
     - name: Run Flake8
-      run: flake8 --config=tox.ini
+      run: flake8 --config=${{github.workspace}}/src/tox.ini
         
   SnykTests:
     runs-on: ubuntu-latest
