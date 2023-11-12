@@ -17,6 +17,7 @@ jobs:
       run: | 
         pip3 install flake8
         npm install -g editorconfig-checker
+        npm install -g markdownlint-cli
         
     - name: Run Flake8
       working-directory: ${{github.workspace}}/src
@@ -26,6 +27,9 @@ jobs:
     - name: Run Editorconfig Checker
       working-directory: ${{github.workspace}}/src
       run: editorconfig-checker
+
+    - name: Run Markdown check
+      run: markdownlint '**/*.md'
         
   SnykTests:
     runs-on: ubuntu-latest
