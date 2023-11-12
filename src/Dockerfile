@@ -1,7 +1,7 @@
 FROM alpine:latest
 
 # Update the ubuntu image
-RUN apk update
+RUN apk upgrade
 
 # Install the requirements
 RUN apk add python3 py3-pip python3-dev
