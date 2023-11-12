@@ -40,7 +40,8 @@ jobs:
         uses: actions/checkout@v2
         
       - name: Run Python Unit tests
-        run: python3 -m unittest src/app_test.py
+        working-directory: ${{github.workspace}}/src
+        run: python3 -m unittest app_test.py
       
       - name: Run Gitleaks
         uses: gitleaks/gitleaks-action@v2
