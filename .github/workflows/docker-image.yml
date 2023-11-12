@@ -17,7 +17,7 @@ jobs:
       working-directory: ${{github.workspace}}/src
       run: |
         pip3 install -r requirements.txt
-        pip3 install flake8
+        pip install flake8
         
     - name: Run Flake8
       uses: suo/flake8-github-action@releases/v1
