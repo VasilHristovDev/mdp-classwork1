@@ -4,7 +4,9 @@ RUN apk upgrade
 
 # Install the requirements
 RUN apk add python3 py3-pip python3-dev
-
+RUN addgroup -S nonroot \
+	&& adduser -S nonroot -G nonroot
+USER nonroot
 # Copy needed files in the container
 COPY ./requirements.txt /usr/src/app/
 COPY ./app.py /usr/src/app/
