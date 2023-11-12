@@ -18,7 +18,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         #PRECOMMAND_MESSAGE: You have style errors. See them below.
-        FLAKE8_OPTS: "--config=tox.ini -v"  # additional flake8 options
+        FLAKE8_OPTS: "--config=./src/tox.ini -v"  # additional flake8 options
         FLAKE8_CODE_DIR: "./src"  # what directory to check, defaults to "."
         
     - name: Run Flake8
