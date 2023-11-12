@@ -6,23 +6,30 @@ on:
       - main
 
 jobs:
-  Flake8:
+  Style:
     runs-on: ubuntu-latest
-
+    
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
     - name: Install dependencies
-      run: pip3 install flake8
+      run: | 
+        pip3 install flake8
+        npm install -g editorconfig-checker
         
     - name: Run Flake8
       working-directory: ${{github.workspace}}/src
+
       run: flake8
+
+    - name: Run Editorconfig Checker
+      working-directory: ${{github.workspace}}/src
+      run: editorconfig-checker
         
   SnykTests:
     runs-on: ubuntu-latest
-    needs: [Flake8]
+    needs: [Style]
 
     steps:
       - name: Checkout code
@@ -38,7 +45,7 @@ jobs:
           snyk test
   SonarCloud:
     runs-on: ubuntu-latest
-    needs: [Flake8]
+    needs: [Style]
 
     steps:
       - name: Checkout code
