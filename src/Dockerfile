@@ -1,5 +1,4 @@
 FROM alpine:latest
-USER nonroot
 # Update the ubuntu image
 RUN apk upgrade
 
