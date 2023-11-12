@@ -14,10 +14,12 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Install dependencies
-      working-directory: ${{github.workspace}}/src
-      run: |
-        pip3 install -r requirements.txt
-        pip install flake8
+      uses: konciergeMD/github-action-flake8@main
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        #PRECOMMAND_MESSAGE: You have style errors. See them below.
+        FLAKE8_OPTS: "--config=tox.ini -v"  # additional flake8 options
+        FLAKE8_CODE_DIR: "./src"  # what directory to check, defaults to "."
         
     - name: Run Flake8
       run: flake8
