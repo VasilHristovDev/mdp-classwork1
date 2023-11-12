@@ -44,8 +44,7 @@ jobs:
           pip3 install -r ./src/requirements.txt
           
       - name: Run Python Unit tests
-        working-directory: ${{github.workspace}}/tests
-        run: python3 -m unittest app_test.py
+        run: python3 -m unittest ./tests/app_test.py
       
       - name: Run Gitleaks
         uses: gitleaks/gitleaks-action@v2
