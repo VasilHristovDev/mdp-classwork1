@@ -1,4 +1,7 @@
+ARG COMMIT_SHA
 FROM alpine:latest
+
+LABEL commit_sha=$COMMIT_SHA
 # Update the ubuntu image
 RUN apk upgrade
 
