@@ -85,6 +85,8 @@ jobs:
       - name: Install Dependecies
         run: |
           pip3 install -r ./src/requirements.txt
+          pip install --upgrade Flask-SQLAlchemy
+          pip install --upgrade SQLAlchemy
 
       - name: Run Python Unit tests
         run: python3 -m unittest ./tests/app_test.py
