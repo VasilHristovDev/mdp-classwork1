@@ -39,16 +39,16 @@ jobs:
     runs-on: ubuntu-latest
     needs: [ Clone ]
     steps:
-    - name: Download Code
-      uses: actions/download-artifact@v3
-      with:
-        name: repo
-        path: .
-    - name: Install dependencies
-      run: npm install -g editorconfig-checker
-    - name: Run Editorconfig Checker
-      working-directory: ${{github.workspace}}/src
-      run: editorconfig-checker
+      - name: Download Code
+        uses: actions/download-artifact@v3
+        with:
+          name: repo
+          path: .
+      - name: Install dependencies
+        run: npm install -g editorconfig-checker
+      - name: Run Editorconfig Checker
+        working-directory: ${{github.workspace}}/src
+        run: editorconfig-checker
 
   MarkdownLint:
     runs-on: ubuntu-latest
@@ -67,12 +67,20 @@ jobs:
   UnitTests:
     runs-on: ubuntu-latest
     needs: [ Clone ]
+    strategy:
+      matrix:
+        python-version: [ 3.6, 3.7, 3.8, 3.9 ]
     steps:
       - name: Download Code
         uses: actions/download-artifact@v3
         with:
           name: repo
           path: .
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
 
       - name: Install Dependecies
         run: |
