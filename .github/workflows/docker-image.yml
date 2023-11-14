@@ -94,9 +94,10 @@ jobs:
          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build Docker image
-        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/mdp-c1:latest ./src
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/mdp-c1:$COMMIT_SHA ./src
         env:
          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+         COMMIT_SHA: ${{ github.sha }}
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
