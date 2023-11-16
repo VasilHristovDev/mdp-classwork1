@@ -3,7 +3,8 @@ ARG COMMIT_SHA
 
 LABEL commit_sha=$COMMIT_SHA
 # Update the ubuntu image
-RUN apk upgrade
+RUN apk update && apk upgrade && \
+    apk add --no-cache openssl
 
 # Install the requirements
 RUN apk add python3 py3-pip python3-dev
