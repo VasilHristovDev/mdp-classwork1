@@ -1,5 +1,1 @@
 Flask==2.3.2
-Flask-SQLAlchemy==3.0
-Flask-Migrate==3.1.0
-mysql-connector-python==8.0.28
-werkzeug>=2.3.8 # not directly required, pinned by Snyk to avoid a vulnerability
