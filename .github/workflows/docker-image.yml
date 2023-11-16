@@ -107,7 +107,7 @@ jobs:
 
   SnykTests:
     runs-on: ubuntu-latest
-    needs: [ Clone ]
+    needs: [ Clone, Flake8, EditorConfigChecker, MarkdownLint, UnitTests, GitLeaks ]
     steps:
       - name: Download Code
         uses: actions/download-artifact@v3
@@ -126,7 +126,7 @@ jobs:
 
   SonarCloud:
     runs-on: ubuntu-latest
-    needs: [ Clone, Flake8, EditorConfigChecker, MarkdownLint, UnitTests, GitLeaks, SnykTests ]
+    needs: [ Clone, Flake8, EditorConfigChecker, MarkdownLint, UnitTests, GitLeaks ]
     steps:
       - name: Download Code
         uses: actions/download-artifact@v3
