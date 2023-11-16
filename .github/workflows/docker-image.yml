@@ -142,7 +142,7 @@ jobs:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN }}
 
   DatabaseTest:
-    needs: [SonarCloud ]
+    needs: [SonarCloud, SnykTests ]
     runs-on: ubuntu-latest
     services:
       postgres:
